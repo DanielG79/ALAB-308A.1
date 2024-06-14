@@ -39,6 +39,32 @@ function trampoline(fn) {
     };
 }
 
-const trampolinedFlatten =trampoline(flattenArray);
+const trampolinedFlatten = trampoline(flattenArray);
 
-console.log(trampolinedFlatten([1,[2,[3,[4]]]]));
+console.log(trampolinedFlatten([1, [2, [3, [4]]]]));
+
+// Part 3: Deferred Execution
+
+const primesContainer = document.getElementById('prime-numbers');
+
+function isPrime(n) {
+    if (n <= 1) return false;
+    for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) return false;
+    }
+    return true;
+}
+
+function addPrimesToDom(n) {
+    if (n <= 1) {
+        alert('Prime number calculation complete!');
+        return;
+    }
+
+    if (isPrime(n)) {
+        primesContainer.textContent += `${n},`;
+    }
+    setTimeout(=>addPrimesToDom(n - 1), 0);
+}
+
+addPrimesToDom(10000);
